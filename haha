@@ -1,0 +1,28 @@
+@startuml
+(*) --> "Khách hàng chọn hàng"
+--> "Khách hàng đến quầy thu ngân"
+--> "Nhân viên thu ngân quét mã vạch sản phẩm"
+--> "Hệ thống hiển thị tổng tiền"
+--> "Nhân viên thông báo tổng tiền"
+fork
+  --> "Khách hàng thanh toán"
+  if "Khách hàng muốn đổi điểm?" then
+    --> "Khách hàng thông báo đổi điểm"
+    --> "Nhân viên kiểm tra điểm"
+    if "Đủ điểm (>= 50)" then
+      --> "Hệ thống trừ điểm"
+      --> "Hệ thống cập nhật tổng tiền"
+    else
+      --> "Thông báo không đủ điểm"
+    endif
+    --> "Khách hàng thanh toán (cập nhật)"
+  endif
+end fork
+--> "Nhân viên xác nhận thanh toán"
+--> "Hệ thống ghi nhận giao dịch"
+if "Khách hàng có thẻ thành viên?" then
+  --> "Hệ thống tích điểm"
+endif
+--> "Nhân viên in hóa đơn và giao cho khách"
+--> (*)
+@enduml
